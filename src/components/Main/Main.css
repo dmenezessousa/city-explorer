@@ -1,0 +1,19 @@
+body{
+    background-color: #fbf9f9;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.toast {
+  margin-left: 37%;
+  margin-top: 10px; ;
+}
+
+.card{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
