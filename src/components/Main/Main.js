@@ -44,7 +44,7 @@ class Main extends React.Component {
     return (
       <main>
         {this.state.error && (
-          <Toast className="ml-4 mt-3" bg="danger" delay="5000">
+          <Toast className="ml-5 mt-3" bg="danger" delay="1000">
             <Toast.Header>
               <strong className="me-auto">Error</strong>
             </Toast.Header>
@@ -81,7 +81,11 @@ class Main extends React.Component {
               />
               <Card.Body>
                 <Card.Title>{this.state.locationData.display_name}</Card.Title>
-                <Card.Text></Card.Text>
+                <Card.Text>
+                  Latitude: {this.state.locationData.lat}
+                  <br />
+                  Longitude: {this.state.locationData.lon}
+                </Card.Text>
               </Card.Body>
             </Card>
           )}

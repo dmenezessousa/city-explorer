@@ -2,7 +2,7 @@
 
 ## Process
 
-[WRRC_Data-Flow](https://docs.google.com/drawings/d/1gzTUUo79MUM_dd6EOgMl-eZMRNkdhX0ILjR8G3tNzvQ/edit)
+![Process](./src/assets/process.png)
 
 **Author**: Diego Sousa
 **Version**: 1.0.0 
