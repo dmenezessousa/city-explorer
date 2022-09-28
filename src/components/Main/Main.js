@@ -1,7 +1,11 @@
 import React from "react";
 import axios from "axios";
+import FormComponent from "./Form";
+import CardComponent from "./Card";
+import ToastComponent from "./Toast";
+import Weather from "./Weather";
+import WeatherForm from "./WeatherForm";
 import "./Main.css";
-import { Container, Form, Card, Toast } from "react-bootstrap";
 
 class Main extends React.Component {
   constructor(props) {
@@ -11,6 +15,10 @@ class Main extends React.Component {
       locationData: {},
       error: false,
       errorMessage: "",
+      weatherData: {},
+      searchWeatherQuery: "",
+      lat: "",
+      lon: "",
     };
   }
 
@@ -23,8 +31,11 @@ class Main extends React.Component {
       console.log(locationIqResponse.data[0]);
       this.setState({
         locationData: locationIqResponse.data[0],
+        lat: locationIqResponse.data[0].lat,
+        lon: locationIqResponse.data[0].lon,
         error: false,
         errorMessage: "",
+        searchQuery: "",
       });
     } catch (error) {
       this.setState({
@@ -40,56 +51,52 @@ class Main extends React.Component {
     });
   };
 
+  updateWeatherSearchQuery = (e) => {
+    this.setState({
+      searchWeatherQuery: e.target.value,
+    });
+  };
+
+  getWeather = async (e) => {
+    e.preventDefault();
+    try {
+      const weatherData = `http://localhost:3001/weather?searchWeatherQuery=${this.state.searchWeatherQuery}&lat=${this.state.lat}&lon=${this.state.lon}`;
+      const weatherResponse = await axios.get(weatherData);
+      console.log(weatherResponse);
+      this.setState({
+        weatherData: weatherResponse.data,
+        error: false,
+        errorMessage: "",
+        searchWeatherQuery: "",
+      });
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: error.message,
+      });
+    }
+  };
+
   render() {
     return (
       <main>
-        {this.state.error && (
-          <Toast className="ml-5 mt-3" bg="danger" delay="1000">
-            <Toast.Header>
-              <strong className="me-auto">Error</strong>
-            </Toast.Header>
-            <Toast.Body style={{ color: "white" }}>
-              {this.state.errorMessage}
-            </Toast.Body>
-          </Toast>
-        )}
-        <Container>
-          <Form className="form-inline">
-            <div className="form-group mx-5  mb-4 mt-5 ">
-              <input
-                onChange={this.updateSearchQuery}
-                type="text"
-                className="form-control"
-                placeholder="Enter City Name"
-              />
-              <button
-                onClick={this.getLocation}
-                type="submit"
-                className="btn btn-primary mb-2 mt-2"
-              >
-                Explorer!
-              </button>
-            </div>
-          </Form>
-        </Container>
-        <Container>
-          {this.state.locationData.display_name && (
-            <Card style={{ width: "44rem", marginLeft: "23%"}}>
-              <Card.Img
-                variant="top"
-                src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY}&center=${this.state.locationData.lat},${this.state.locationData.lon}&zoom=13`}
-              />
-              <Card.Body>
-                <Card.Title>{this.state.locationData.display_name}</Card.Title>
-                <Card.Text>
-                  Latitude: {this.state.locationData.lat}
-                  <br />
-                  Longitude: {this.state.locationData.lon}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          )}
-        </Container>
+        <ToastComponent
+          error={this.state.error}
+          errorMessage={this.state.errorMessage}
+        />
+        <FormComponent
+          getLocation={this.getLocation}
+          updateSearchQuery={this.updateSearchQuery}
+          searchQuery={this.state.searchQuery}
+        />
+        <CardComponent locationData={this.state.locationData} />
+        <WeatherForm
+          getWeather={this.getWeather}
+          updateWeatherSearchQuery={this.updateWeatherSearchQuery}
+          searchWeatherQuery={this.state.searchWeatherQuery}
+          weatherData={this.state.weatherData}
+        />
+        <Weather weatherData={this.state.weatherData} />
       </main>
     );
   }
