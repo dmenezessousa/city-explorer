@@ -4,7 +4,6 @@ import FormComponent from "./Form";
 import CardComponent from "./Card";
 import ToastComponent from "./Toast";
 import Weather from "./Weather";
-import WeatherForm from "./WeatherForm";
 import "./Main.css";
 
 class Main extends React.Component {
@@ -24,6 +23,10 @@ class Main extends React.Component {
 
   getLocation = async (e) => {
     e.preventDefault();
+    this.setState({
+      locationData: {},
+      weatherData: {},
+    });
     try {
       const locationIqData = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_API_KEY}&q=${this.state.searchQuery}&format=json`;
 
@@ -43,24 +46,9 @@ class Main extends React.Component {
         errorMessage: error.message,
       });
     }
-  };
 
-  updateSearchQuery = (e) => {
-    this.setState({
-      searchQuery: e.target.value,
-    });
-  };
-
-  updateWeatherSearchQuery = (e) => {
-    this.setState({
-      searchWeatherQuery: e.target.value,
-    });
-  };
-
-  getWeather = async (e) => {
-    e.preventDefault();
     try {
-      const weatherData = `http://localhost:3001/weather?searchWeatherQuery=${this.state.searchWeatherQuery}&lat=${this.state.lat}&lon=${this.state.lon}`;
+      const weatherData = `http://localhost:3001/weather?searchWeatherQuery=${this.state.searchQuery}&lat=${this.state.lat}&lon=${this.state.lon}`;
       const weatherResponse = await axios.get(weatherData);
       console.log(weatherResponse);
       this.setState({
@@ -77,6 +65,12 @@ class Main extends React.Component {
     }
   };
 
+  updateSearchQuery = (e) => {
+    this.setState({
+      searchQuery: e.target.value,
+    });
+  };
+
   render() {
     return (
       <main>
@@ -90,12 +84,6 @@ class Main extends React.Component {
           searchQuery={this.state.searchQuery}
         />
         <CardComponent locationData={this.state.locationData} />
-        <WeatherForm
-          getWeather={this.getWeather}
-          updateWeatherSearchQuery={this.updateWeatherSearchQuery}
-          searchWeatherQuery={this.state.searchWeatherQuery}
-          weatherData={this.state.weatherData}
-        />
         <Weather weatherData={this.state.weatherData} />
       </main>
     );
