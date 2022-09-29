@@ -4,6 +4,7 @@ import FormComponent from "./Form";
 import CardComponent from "./Card";
 import ToastComponent from "./Toast";
 import Weather from "./Weather";
+import Movies from "./Movies";
 import "./Main.css";
 
 class Main extends React.Component {
@@ -15,7 +16,7 @@ class Main extends React.Component {
       error: false,
       errorMessage: "",
       weatherData: {},
-      searchWeatherQuery: "",
+      moviesData: {},
       lat: "",
       lon: "",
     };
@@ -32,12 +33,43 @@ class Main extends React.Component {
 
       const locationIqResponse = await axios.get(locationIqData);
       console.log(locationIqResponse.data[0]);
+      this.setState(
+        {
+          locationData: locationIqResponse.data[0],
+          lat: locationIqResponse.data[0].lat,
+          lon: locationIqResponse.data[0].lon,
+          error: false,
+          errorMessage: "",
+        },
+        () => {
+          this.getWeather();
+          this.getMovies();
+        }
+      );
+    } catch (error) {
       this.setState({
-        locationData: locationIqResponse.data[0],
-        lat: locationIqResponse.data[0].lat,
-        lon: locationIqResponse.data[0].lon,
+        error: true,
+        errorMessage: error.message,
+      });
+    }
+  };
+
+  getWeather = async () => {
+    try {
+      const API = process.env.REACT_APP_API_URL;
+      const url = `${API}/weather`;
+      const weatherResponse = await axios.get(url, {
+        params: {
+          lat: this.state.lat,
+          lon: this.state.lon,
+        },
+      });
+
+      this.setState({
+        weatherData: weatherResponse.data,
         error: false,
         errorMessage: "",
+        searchWeatherQuery: "",
         searchQuery: "",
       });
     } catch (error) {
@@ -46,16 +78,24 @@ class Main extends React.Component {
         errorMessage: error.message,
       });
     }
+  };
 
+  getMovies = async () => {
     try {
-      const weatherData = `http://localhost:3001/weather?searchWeatherQuery=${this.state.searchQuery}&lat=${this.state.lat}&lon=${this.state.lon}`;
-      const weatherResponse = await axios.get(weatherData);
-      console.log(weatherResponse);
+      const API = process.env.REACT_APP_API_URL;
+      const url = `${API}/movies`;
+      const moviesResponse = await axios.get(url, {
+        params: {
+          query: this.state.searchQuery,
+        },
+      });
+
       this.setState({
-        weatherData: weatherResponse.data,
+        moviesData: moviesResponse.data,
         error: false,
         errorMessage: "",
-        searchWeatherQuery: "",
+        searchMoviesQuery: "",
+        searchQuery: "",
       });
     } catch (error) {
       this.setState({
@@ -85,6 +125,7 @@ class Main extends React.Component {
         />
         <CardComponent locationData={this.state.locationData} />
         <Weather weatherData={this.state.weatherData} />
+        <Movies moviesData={this.state.moviesData} />
       </main>
     );
   }
