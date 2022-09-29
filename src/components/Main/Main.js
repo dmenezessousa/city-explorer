@@ -56,7 +56,7 @@ class Main extends React.Component {
 
   getWeather = async () => {
     try {
-      const API = process.env.REACT_APP_API_URL;
+      const API = process.env.REACT_APP_API_LIVE_URL;
       const url = `${API}/weather`;
       const weatherResponse = await axios.get(url, {
         params: {
@@ -82,7 +82,7 @@ class Main extends React.Component {
 
   getMovies = async () => {
     try {
-      const API = process.env.REACT_APP_API_URL;
+      const API = process.env.REACT_APP_API_LIVE_URL;
       const url = `${API}/movies`;
       const moviesResponse = await axios.get(url, {
         params: {

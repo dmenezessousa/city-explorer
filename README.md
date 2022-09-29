@@ -3,6 +3,8 @@
 ## Process
 
 ![Process](./src/assets/process.png)
+![Process](lab07.png)
+![Process](lab08diagram.png)
 
 **Author**: Diego Sousa
 **Version**: 1.0.0 
@@ -74,6 +76,30 @@ Estimate of time needed to complete: 10 minutes
 Start time: 7:40pm EST
 
 Finish time: 8:10pm
+
+Actual time needed to complete: 30 minutes
+
+===========================================================================
+
+Name of feature:  Weather
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 7:00pm EST
+
+Finish time: 8:00pm EST
+
+Actual time needed to complete: 1 hour
+
+===========================================================================
+
+Name of feature:  Movies
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 8:00pm EST
+
+Finish time: 8:30pm EST
 
 Actual time needed to complete: 30 minutes
 
