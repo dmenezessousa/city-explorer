@@ -7,7 +7,6 @@ class FormComponent extends React.Component {
       <>
         
         <Container>
-          <h2>Map of the city!</h2>
           <Form className="form-inline">
             <div className="form-group mx-5  mb-4 mt-5 ">
               <input
