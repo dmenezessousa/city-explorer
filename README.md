@@ -104,3 +104,15 @@ Finish time: 8:30pm EST
 Actual time needed to complete: 30 minutes
 
 ===========================================================================
+
+Name of feature:  Refactoring components and nesting extra components.
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 6:00pm EST
+
+Finish time: 8:00pm EST
+
+Actual time needed to complete: 2 hours
+
+===========================================================================

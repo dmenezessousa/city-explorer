@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import FormComponent from "./Form";
-import CardComponent from "./Card";
-import ToastComponent from "./Toast";
-import Weather from "./Weather";
-import Movies from "./Movies";
+import FormComponent from "../Form/Form";
+import CardComponent from "../Card/Card";
+import ToastComponent from "../Toast/Toast";
+import Weather from "../Weather/Weather";
+import Movies from "../Movies/Movies";
 import "./Main.css";
 
 class Main extends React.Component {
