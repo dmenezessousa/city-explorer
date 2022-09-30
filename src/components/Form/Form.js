@@ -1,5 +1,5 @@
 import React from "react";
-import "./Main.css";
+import "../Main/Main.css";
 import { Container, Form } from "react-bootstrap";
 class FormComponent extends React.Component {
   render() {
